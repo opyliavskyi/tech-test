@@ -56,10 +56,10 @@ class UserControllerTest extends TestCase
         $this->postJson('/api/users', [])
             ->assertStatus(422)
             ->assertJson([
-                "email" => ["The email field is required."],
-                "first_name" => ["The first name field is required."],
-                "last_name" => ["The last name field is required."],
-                "role" => ["The role field is required."]
+                'email' => ['The email field is required.'],
+                'first_name' => ['The first name field is required.'],
+                'last_name' => ['The last name field is required.'],
+                'role' => ['The role field is required.'],
             ]);
     }
 
@@ -82,5 +82,20 @@ class UserControllerTest extends TestCase
         ])
             ->assertStatus(400)
             ->assertJson(['message' => 'Wrong user data']);
+    }
+
+    public function testCustomValidationException(): void
+    {
+        $this->postJson('/api/users', [
+            'first_name' => fake()->firstName().'!',
+            'last_name' => '!'.fake()->lastName(),
+            'email' => fake()->unique()->email(),
+            'role' => Student::ROLE,
+        ])
+            ->assertStatus(422)
+            ->assertJson([
+                'first_name' => ['Data did not pass App\\Validator\\Rules\\SpecialCharactersRule class validation'],
+                'last_name' => ['Data did not pass App\\Validator\\Rules\\SpecialCharactersRule class validation'],
+            ]);
     }
 }
