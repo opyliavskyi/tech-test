@@ -8,4 +8,4 @@ RUN apt-get -y update \
     && docker-php-ext-enable xdebug
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-WORKDIR /var/www
+WORKDIR /var/www/html

@@ -1,3 +1,7 @@
+### Instructions for setting up the project can be found in the `README.md` file inside the project (`www/html/README.md`)
+
+
+
 # PHP Development Task
 ## Part One (~3 hours, at home)
 
